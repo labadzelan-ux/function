@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>რა არის ფუნქცია პროგრამირებაში? — ინტერაქტიული გაკვეთილი</title>
+  <meta name="description" content="ინტერაქტიული გაკვეთილი VII–IX კლასისთვის: ფუნქციის მანქანა, Scratch-იდან Python-მდე, პრაქტიკული დავალებები და თვითშეფასების ქვიზი.">
+  <!-- მხოლოდ ლოკალური CSS/JS. გარე სკრიპტები, შრიფტები, ქუქი-ფაილები და ანალიტიკა არ გამოიყენება. -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">გადასვლა ძირითად შინაარსზე</a>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+        <rect x="2" y="2" width="36" height="36" rx="10" fill="#3B82F6"/>
+        <text x="20" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" font-family="monospace">f()</text>
+      </svg>
+      <span>ფუნქციის სახელოსნო</span>
+    </div>
+    <nav aria-label="გაკვეთილის ეტაპები">
+      <a href="#m1">1. მანქანა</a>
+      <a href="#m2">2. ბლოკები → Python</a>
+      <a href="#m3">3. პრაქტიკა</a>
+      <a href="#m4">4. ქვიზი</a>
+    </nav>
+    <div class="tools" role="group" aria-label="ხელმისაწვდომობის პარამეტრები">
+      <button id="btn-font-down" class="btn btn-tool" aria-label="შრიფტის შემცირება">A−</button>
+      <button id="btn-font-up" class="btn btn-tool" aria-label="შრიფტის გაზრდა">A+</button>
+      <button id="btn-contrast" class="btn btn-tool" aria-pressed="false">◐ მაღალი კონტრასტი</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <p class="eyebrow">კომპიუტერული ტექნოლოგიები · VII–IX კლასი</p>
+        <h1 id="title">რა არის <span class="hl">ფუნქცია</span> პროგრამირებაში?</h1>
+        <p class="lead">ფუნქცია არის კოდის <b>სახელიანი ნაწილი</b>, რომელიც იღებს მონაცემს, ამუშავებს მას და აბრუნებს შედეგს. დაწერე ერთხელ — გამოიყენე რამდენჯერაც გინდა!</p>
+        <div class="progress-wrap">
+          <div class="progress-label" id="progress-label">გავლილი ეტაპები: <b id="progress-text">0 / 4</b></div>
+          <div class="progress" role="progressbar" aria-labelledby="progress-label" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="progress"><div id="progress-bar"></div></div>
+        </div>
+      </div>
+      <ol class="flow" aria-label="ფუნქციის მუშაობის სქემა">
+        <li class="flow-step s-in"><span class="ic" aria-hidden="true">📥</span><b>შეტანა</b><small>პარამეტრი</small></li>
+        <li class="flow-step s-proc"><span class="ic" aria-hidden="true">⚙️</span><b>დამუშავება</b><small>ფუნქციის ტანი</small></li>
+        <li class="flow-step s-out"><span class="ic" aria-hidden="true">📤</span><b>შედეგი</b><small>return</small></li>
+      </ol>
+    </section>
+
+    <!-- ===== მოდული 1 ===== -->
+    <section id="m1" class="card" aria-labelledby="m1-title">
+      <header class="sec-head">
+        <span class="badge">ეტაპი 1 · ინტუიციური შესავალი</span>
+        <h2 id="m1-title">ფუნქციის მანქანა</h2>
+        <p>წარმოიდგინე სმუზის ბლენდერი. შენ ირჩევ ინგრედიენტებს (<b>პარამეტრებს</b>), ბლენდერი მათ ამუშავებს და გიბრუნებს სასმელს (<b>შედეგს</b>). ბლენდერს არ აინტერესებს, ვინ აჭერს ღილაკს — ის ყოველთვის ერთნაირად მუშაობს.</p>
+      </header>
+
+      <div class="machine-grid">
+        <div class="inputs">
+          <fieldset>
+            <legend>პარამეტრი 1 — <code>fruit</code></legend>
+            <div class="chips" data-group="fruit" role="group"></div>
+          </fieldset>
+          <fieldset>
+            <legend>პარამეტრი 2 — <code>extra</code></legend>
+            <div class="chips" data-group="extra" role="group"></div>
+          </fieldset>
+          <button id="btn-call" class="btn btn-primary btn-big">▶ ფუნქციის გამოძახება</button>
+        </div>
+
+        <div class="machine">
+          <pre class="code" id="m1-code" aria-label="ფუნქციის გამოძახების კოდი"></pre>
+          <div class="blender" id="blender">
+            <div class="drops" id="drops" aria-hidden="true"></div>
+            <svg viewBox="0 0 160 220" class="blender-svg" aria-hidden="true">
+              <path d="M30 20 h100 l-12 130 h-76 z" fill="#EFF6FF" stroke="#3B82F6" stroke-width="4"/>
+              <rect id="liquid" x="40" y="150" width="80" height="0" fill="#FB7185"/>
+              <g id="blade"><path d="M80 140 l-22 -5 l22 -2 l22 2 z" fill="#64748B"/></g>
+              <rect x="22" y="150" width="116" height="55" rx="12" fill="#CBD5E1" stroke="#475569" stroke-width="3"/>
+              <circle cx="80" cy="178" r="11" fill="#F59E0B" id="led"/>
+            </svg>
+            <p class="stage" id="stage" aria-live="polite">ბლენდერი მზადაა</p>
+          </div>
+          <div class="result" id="m1-result" aria-live="polite">
+            <span class="r-label">return →</span><span id="m1-output">აქ გამოჩნდება შედეგი</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== მოდული 2 ===== -->
+    <section id="m2" class="card" aria-labelledby="m2-title">
+      <header class="sec-head">
+        <span class="badge">ეტაპი 2 · ხიდი ბლოკებსა და კოდს შორის</span>
+        <h2 id="m2-title">Scratch-იდან Python-მდე</h2>
+        <p>ერთი და იგივე ფუნქცია ორ „ენაზე“. მიიტანე მაუსი (ან Tab ღილაკით გადადი) ფერად სიტყვებზე — <b>კოდის ლუპა</b> აგიხსნის თითოეულს.</p>
+      </header>
+
+      <div class="switch" role="tablist" aria-label="ხედის არჩევა">
+        <button role="tab" class="sw active" data-view="both" aria-selected="true" id="view-both">გვერდიგვერდ</button>
+        <button role="tab" class="sw" data-view="blocks" aria-selected="false" id="view-blocks">მხოლოდ ბლოკები</button>
+        <button role="tab" class="sw" data-view="python" aria-selected="false" id="view-python">მხოლოდ Python</button>
+      </div>
+
+      <div class="bridge" id="bridge" data-view="both">
+        <div class="pane pane-blocks" aria-label="ვიზუალური ბლოკები">
+          <h3>🧩 ბლოკები</h3>
+          <div class="sblock s-define" tabindex="0" data-tip="def">
+            <span>განსაზღვრე</span> <span class="s-name">add_points</span>
+            <span class="s-param" data-tip="param" tabindex="0">score</span>
+          </div>
+          <div class="sblock s-op s-indent" tabindex="0" data-tip="body">
+            <span>total = </span><span class="s-param">score</span><span> + 10</span>
+          </div>
+          <div class="sblock s-return s-indent" tabindex="0" data-tip="return">
+            <span>დააბრუნე</span> <span class="s-val">total</span>
+          </div>
+          <div class="sblock s-call" tabindex="0" data-tip="call">
+            <span>თქვი</span> <span class="s-val">add_points(25)</span>
+          </div>
+        </div>
+
+        <div class="pane pane-py" aria-label="Python კოდი">
+          <h3>🐍 Python</h3>
+          <pre class="code big"><code><span class="tok kw" tabindex="0" data-tip="def">def</span> <span class="tok fn" tabindex="0" data-tip="name">add_points</span>(<span class="tok pa" tabindex="0" data-tip="param">score</span>)<span class="tok colon" tabindex="0" data-tip="colon">:</span>
+<span class="tok body" tabindex="0" data-tip="body">    total = score + 10</span>
+    <span class="tok ret" tabindex="0" data-tip="return">return</span> total
+
+<span class="tok call" tabindex="0" data-tip="call">print(add_points(25))</span>   <span class="cm"># 35</span></code></pre>
+        </div>
+      </div>
+      <div class="lens" id="lens" role="status" aria-live="polite">
+        <span class="lens-ic" aria-hidden="true">🔍</span>
+        <div><b id="lens-title">კოდის ლუპა</b><p id="lens-text">მიიტანე მაუსი ფერად ნაწილზე.</p></div>
+      </div>
+      <p class="tiny" id="lens-count">გამოკვლეულია 0 / 7 ნაწილი</p>
+    </section>
+
+    <!-- ===== მოდული 3 ===== -->
+    <section id="m3" class="card" aria-labelledby="m3-title">
+      <header class="sec-head">
+        <span class="badge">ეტაპი 3 · ინტერაქტიული პრაქტიკა</span>
+        <h2 id="m3-title">სამი მინი-დავალება</h2>
+      </header>
+
+      <!-- დავალება 1 -->
+      <article class="task" id="task1" aria-labelledby="t1-title">
+        <h3 id="t1-title"><span class="num">1</span> პარამეტრების შერჩევა</h3>
+        <p>პერსონაჟმა ყუთს უნდა გადაახტეს და ვარსკვლავამდე მიაღწიოს. ყუთის სიმაღლეა <b>3</b>, ვარსკვლავამდე მანძილი — <b>4</b>. აირჩიე არგუმენტები ფუნქციისთვის <code>jump(height, distance)</code>.</p>
+        <div class="game" aria-hidden="true">
+          <svg viewBox="0 0 400 160" id="game-svg">
+            <line x1="0" y1="140" x2="400" y2="140" stroke="#94A3B8" stroke-width="3"/>
+            <rect x="170" y="80" width="40" height="60" rx="6" fill="#FDBA74" stroke="#EA580C" stroke-width="2"/>
+            <text x="190" y="116" text-anchor="middle" font-size="14" fill="#7C2D12">3</text>
+            <polygon points="330,105 336,120 352,120 339,129 344,144 330,135 316,144 321,129 308,120 324,120" fill="#FACC15" stroke="#CA8A04" stroke-width="2" transform="translate(0,-8)"/>
+            <g id="hero">
+              <circle cx="0" cy="-26" r="13" fill="#34D399" stroke="#047857" stroke-width="2"/>
+              <circle cx="4" cy="-29" r="2.5" fill="#064E3B"/>
+              <rect x="-10" y="-14" width="20" height="14" rx="5" fill="#3B82F6"/>
+            </g>
+          </svg>
+        </div>
+        <div class="argrow">
+          <code>jump(</code>
+          <label class="sr" for="j-h">height — ნახტომის სიმაღლე</label>
+          <select id="j-h"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+          <code>,</code>
+          <label class="sr" for="j-d">distance — ნახტომის სიგრძე</label>
+          <select id="j-d"><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+          <code>)</code>
+          <button class="btn btn-primary" id="btn-jump">▶ გამოძახება</button>
+        </div>
+        <p class="feedback" id="t1-fb" aria-live="polite"></p>
+      </article>
+
+      <!-- დავალება 2 -->
+      <article class="task" id="task2" aria-labelledby="t2-title">
+        <h3 id="t2-title"><span class="num">2</span> ნუ გაიმეორებ! (DRY პრინციპი)</h3>
+        <p>ქვემოთ სამ ნივთზე 20%-იანი ფასდაკლება სამჯერ ერთნაირადაა დათვლილი. ააწყვე ერთი ფუნქცია, რომელიც ამას ყველა ნივთისთვის გააკეთებს — დააჭირე ბლოკებს სწორი თანმიმდევრობით.</p>
+        <div class="dry-grid">
+          <div class="dry-col bad">
+            <h4>განმეორებადი კოდი <span class="pill">9 ხაზი</span></h4>
+<pre class="code"><code><span class="cm"># რვეული</span>
+notebook = 5
+notebook = notebook - notebook * 0.2
+<span class="cm"># კალამი</span>
+pen = 2
+pen = pen - pen * 0.2
+<span class="cm"># ზურგჩანთა</span>
+backpack = 40
+backpack = backpack - backpack * 0.2</code></pre>
+          </div>
+          <div class="dry-col good">
+            <h4>შენი ფუნქცია</h4>
+            <div id="assembled" class="assembled code" aria-live="polite" aria-label="აწყობილი კოდი"></div>
+            <h4 class="mt">ხელმისაწვდომი ბლოკები</h4>
+            <div id="pool" class="pool"></div>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" id="btn-dry-check">შემოწმება</button>
+          <button class="btn btn-ghost" id="btn-dry-reset">თავიდან დაწყება</button>
+        </div>
+        <p class="feedback" id="t2-fb" aria-live="polite"></p>
+      </article>
+
+      <!-- დავალება 3 -->
+      <article class="task" id="task3" aria-labelledby="t3-title">
+        <h3 id="t3-title"><span class="num">3</span> იპოვე ლოგიკური შეცდომა</h3>
+        <p>ეს პროგრამა ორ ამოცანას უნდა ასრულებდეს, მაგრამ ეკრანზე სწორი შედეგი არ ჩანს. დააჭირე იმ ხაზს, სადაც პრობლემა იმალება.</p>
+        <div class="debug-cases" id="debug-cases"></div>
+      </article>
+    </section>
+
+    <!-- ===== მოდული 4 ===== -->
+    <section id="m4" class="card" aria-labelledby="m4-title">
+      <header class="sec-head">
+        <span class="badge">ეტაპი 4 · თვითშეფასება</span>
+        <h2 id="m4-title">მინი-ქვიზი</h2>
+        <p>4 სიტუაციური კითხვა. თუ პასუხი ჯერ ვერ გამოგივიდა — მიიღებ მინიშნებას და კიდევ სცდი. აქ შეცდომა სწავლის ნაწილია!</p>
+      </header>
+      <div id="quiz"></div>
+      <div id="quiz-done" class="finale" hidden>
+        <h3>🌟 შესანიშნავი შედეგია!</h3>
+        <p>ახლა შეგიძლია ახსნა, რა არის ფუნქცია, რისთვის გვჭირდება პარამეტრები და <code>return</code>, და რატომ ზოგავს ფუნქცია დროს.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="safe">🔒 ეს რესურსი არ აგროვებს პერსონალურ მონაცემებს და სრულად უსაფრთხოა საკლასო გამოყენებისთვის.</p>
+    <p class="tiny">პროგრესი ინახება მხოლოდ ღია ჩანართის მეხსიერებაში და გვერდის დახურვისას იშლება. ყველა ილუსტრაცია შექმნილია კოდში (SVG/CSS).</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
